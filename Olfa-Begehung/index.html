@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Olfa-Begehung</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=2">
+
+    <!--jquery-->
+    <link rel="stylesheet" href="Content/jquery.mobile-1.4.5.css" />
+    <script src="scripts/jquery-1.8.0.min.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+
+
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    
+    <!--custom scripts and styles-->
+    <link rel="stylesheet" href="css/custom.css"/>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/controller.js"></script>
+    <script src="scripts/db/db_factory.js"></script>
+    <script src="scripts/cloud/google_drive.js"></script>
+    <script src="scripts/begehung/data_controller.js"></script>
+
+</head>
+<body>
+
+    <div data-role="page" id="startPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <button id="exitBtn" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-btn-icon-notext ui-icon-power">exit</button>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+           <h3>Begehungen</h3>
+            <a class="ui-btn" href="#startBegehungPage">Neu beginnen</a>
+            <a class="ui-btn" href="#continueBegehungPage">Fortsetzen</a>
+            <a class="ui-btn" href="#uploadBegehungPage">Hochladen</a>
+            <a class="ui-btn" href="#adminFormsPage">Verwalten</a>
+
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="startBegehungPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>Neue Begehung auswählen</h3>
+            <div id="sb_message_div"></div>
+            <ul id="sb_forms_lv" data-role="listview" data-autodividers="false" data-split-icon="grid" data-split-theme="d" data-inset="true"></ul>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="continueBegehungPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>Begehung fortsetzen</h3>
+            <div id="cb_message_div"></div>
+            <ul id="cb_forms_lv" data-role="listview" data-autodividers="false" data-split-icon="grid" data-theme="c" data-split-theme="c" data-inset="true"></ul>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="uploadBegehungPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>Begehung hochladen</h3>
+            <div id="ub_message_div"></div>
+            <ul id="ub_forms_lv" data-role="listview" data-autodividers="false" data-split-icon="grid" data-theme="c" data-split-theme="c" data-inset="true"></ul>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="begehungHauptPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <div id="bhp_message_div" style="font-size:medium; color:#ff0000"></div>
+            <div class="ui-body ui-body-a ui-corner-all" id="bhp_header_div"></div>
+            
+            <h4>Proband</h4>
+            <div class="ui-field-contain">
+                <label for="bhp_vornameProband_inp">Vorname</label>
+                <input name="bhp_vornameProband_inp" id="bhp_vornameProband_inp" type="text" value="" data-mini="true">
+                <span id="bhp_vornameProband_err" style="color:red;font-weight:bold"></span>
+            </div>
+            <div class="ui-field-contain">
+                <label for="bhp_nachnameProband_inp">Nachname</label>
+                <input name="bhp_nachnameProband_inp" id="bhp_nachnameProband_inp" bhp_nachname_btn" type="text" value="" data-mini="true">
+                <span id="bhp_nachnameProband_err" style="color:red;font-weight:bold"></span>
+             </div>
+            <br />
+                    <table class="ui-responsive item-list" id="bhp_punkte_tbl" data-role="table" data-mode="reflow">
+                        <thead>
+                            <tr>
+                                <th data-priority="1">Punkt</th>
+                                <th style="width: 40%;">Beschreibung</th>
+                                <th data-priority="3">Eindrücke</th>
+                                <th data-priority="4">Start</th>
+                                <th data-priority="5">Ende</th>
+                                <th data-priority="2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="placemarkPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l ui-btn-icon-notext" href="#begehungHauptPage">back</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <input id="pmp_selectedPlacemark_ip" style="display:none" />
+            <div class="ui-body ui-body-a ui-corner-all" id="pmp_header_div"></div>
+            <div class="ui-body ui-body-a ui-corner-all" id="pmp_message_div"><p></p></div>
+            <div id="pmp_err_div" style="color:red;font-weight:bold"></div>
+            
+            <fieldset>
+                <button id="pmp_startPlacemark_btn" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-icon-right ui-icon-carat-r">start</button>
+                <button id="pmp_stopPlacemark_btn" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-icon-right ui-icon-minus">stop</button>
+                <button id="pmp_savePlacemark_btn" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-icon-right ui-icon-back">speichern</button>
+            </fieldset>
+
+            <table class="ui-responsive" id="pmp_werte_tbl" data-role="table" data-mode="reflow">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Nr</th>
+                        <th data-priority="2">Sekunden</th>
+                        <th style="width: 66%;">Wahrnehmung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+    <div data-role="page" id="adminFormsPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>Formulare verwalten</h3>
+            <div id="af_message_div"></div>
+            <ul id="af_forms_lv" data-role="listview" data-autodividers="false" data-split-icon="grid" data-split-theme="d" data-inset="true"></ul>
+            <h4>weitere Formulare</h4>
+            <a class="ui-btn" href="#downloadFormsPage">runterladen</a>
+            <a class="ui-btn" href="#addManualFormPage">manuell zufügen</a>
+            <h4>Datenbank</h4>
+            <a class="ui-btn" href="#af_confirmClearDatabase_pu" data-transition="pop" data-rel="popup">Datenbank leeren</a>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+        <div id="af_confirmDelete_pu" style="max-width: 400px;" data-role="popup" data-theme="b" data-overlay-theme="b" data-dismissible="false">
+            <div data-role="header" data-theme="a">
+                <h1>Formular löschen?</h1>
+            </div>
+            <div class="ui-content" role="main">
+                <input id="af_selectedLocalForm_ip" style="display:none"/>
+                <h3 class="ui-title">Soll das Formular wirklich gelöscht werden?</h3>
+                <button id="af_deleteForm_btn" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow" data-rel="back">löschen</button>
+                <a class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" href="#" data-rel="back">abbrechen</a>
+            </div>
+        </div>
+        <div id="af_confirmClearDatabase_pu" style="max-width: 400px;" data-role="popup" data-theme="b" data-overlay-theme="b" data-dismissible="false">
+            <div data-role="header" data-theme="a">
+                <h1>Datenbank leeren?</h1>
+            </div>
+            <div class="ui-content" role="main">
+                <h3 class="ui-title">Soll die Datenbank wirklich gellert werden?</h3>
+                <button id="af_cleanDatabase_btn" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow" data-rel="back">leeren</button>
+                <a class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" href="#" data-rel="back">abbrechen</a>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="downloadFormsPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l" href="#adminFormsPage">back</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>Formular auswählen</h3>
+            <div id="dlf_message_div"></div>
+            <ul id="dlf_forms_lv" data-role="listview" data-autodividers="false" data-split-icon="grid" data-split-theme="d" data-inset="true"></ul>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+        <div id="dlf_message_pu" data-role="popup">
+            <p>This is a completely basic popup, no options set.</p>
+        </div>
+
+        <div id="dlf_confirmDownload_pu" style="max-width: 400px;" data-role="popup" data-theme="b" data-overlay-theme="b" data-dismissible="false">
+            <div data-role="header" data-theme="a">
+                <h1>Formular laden?</h1>
+            </div>
+            <div class="ui-content" role="main">
+                <input id="dlf_selectedServerForm_ip" style="display:none" />
+                <h3 class="ui-title">Soll das Formular geladen werden?</h3>
+                <button id="dlf_addForm_btn" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow" data-rel="back">ok</button>
+                <a class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" href="#" data-rel="back">abbrechen</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="addManualFormPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l" href="#adminFormsPage">back</a>
+            <h1>neues Formular</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <h3>neues Formular</h3>
+            <div id="amf_message_div"></div>
+            <button id="amf_addForm_btn">speichern</button>
+            <fieldset>
+                <label for="amf_Name_txt">Name:</label>
+                <input name="amf_Name_txt" id="amf_Name_txt" type="text" value="">
+                <label for="amf_Description_txt">Beschreibung:</label>
+                <input name="amf_Description_txt" id="amf_Description_txt" type="text" value="">
+                <label for="amf_Raster_txt">Raster:</label>
+                <input name="amf_Raster_txt" id="amf_Raster_txt" type="text" value="">
+                <label for="amf_KML_ta">KML:</label>
+                <textarea name="amf_KML_ta" id="amf_KML_ta"></textarea>
+                <label for="amf_Gerueche_ta">Gerüche(mit ; getrennt):</label>
+                <textarea name="amf_Eindruecke_ta" id="amf_Eindruecke_ta"></textarea>
+            </fieldset>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="tempPage">
+        <div data-role="header" style="overflow:hidden;" data-id="navbar1" data-position="fixed" data-theme="d">
+            <a class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" href="#startPage">home</a>
+            <h1>Olfa-Begehung</h1>
+            <a href="#contactPage" data-role="button" data-icon="info" data-iconpos="notext" data-direction="reverse" class="contactLink ui-btn-right jqm-home">Info</a>
+        </div>
+        <div data-role="content">
+            <button id="btnOpenDb">Open Database</button>
+            <button id="btnCreateTable">Create Table</button>
+            <button id="btnRemoveTableDb">Remove Table</button>
+            <button id="btnAddBegehung">Add Begehung</button>
+        </div>
+        <div data-role="footer">
+            <h4>YodaSoft 2015</h4>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
